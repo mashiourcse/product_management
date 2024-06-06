@@ -1,0 +1,76 @@
+.product {
+    width: 80%;
+    margin: 0 auto; /* Centers the div horizontally */
+  }
+  
+.product .header{
+
+    background: #83CBEB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.product h4{
+    text-align: center;
+    background-color: #C1E5F5;
+    margin: 10px;
+    padding: 15px 40px;
+    border-radius: 5px;
+}
+.product .table .top-section{
+
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+.product .table .top-section .right-side{
+    float: right;
+}
+
+.product .table .top-section span{
+    margin-left: 50px;
+}
+
+.product .table .top-section .input{
+    border-color: #83CBEB;
+}
+
+.product .pagination{
+
+    justify-content: center;
+}
+
+.product .form {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.product h4{
+    text-align: center;
+    background-color: #C1E5F5;
+    margin: 10px;
+    padding: 15px 40px;
+    border-radius: 5px;
+}
+.product .form .row{
+    width: 80%;
+    
+}
+
+.product .form .details .row input{
+    padding: 2px;
+}
+
+.product .details h5{
+    text-align: center;
+  
+    margin: 10px;
+    padding: 15px 40px;
+    border-radius: 5px;
+}
+
+.product .btn {
+    background-color: #83CBEB;
+}
