@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export const ProductList = () => {
   return (
@@ -11,8 +12,8 @@ export const ProductList = () => {
        <div className='table'>
             <div className='top-section'>
 
-            <button className=' btn btn-primary left-side'>Create</button>
-            <span className='btn btn-primary left-side'>Product list</span>
+            <Link to='/create-product' className=' btn btn-primary left-side'>Create</Link>
+          
             <input className='right-side' type="text" placeholder='search'/>
             </div>
             <div className='main'>

@@ -55,7 +55,7 @@
     border-radius: 5px;
 }
 .product .form .row{
-    width: 80%;
+    /* width: 80%; */
     
 }
 
@@ -73,4 +73,10 @@
 
 .product .btn {
     background-color: #83CBEB;
+}
+
+.product .submit-group{
+    float: right;
+    width: calc(20% - 10px); /* Adjust width as needed */
+  margin: 65px; /* Adjust margin as needed */
 }

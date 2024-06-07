@@ -6,7 +6,7 @@ const Layouts = () => {
   return (
     <div className="row">
       <div className="col-12">
-        {/* <Navbar /> */}
+        <Navbar />
       </div>
       <div className="col-12">
         <Outlet />

@@ -16,13 +16,7 @@ const Navbar = () => {
       style={{ backgroundColor: "#9df5c6", color: "black" }}
     >
       <div className="container-fluid">
-        <Link
-          className="custom-link font-weight-bold nav-link navbar-brand"
-          to={"/"}
-          
-        >
-          Convex
-        </Link>
+        
         <button
           className="font-weight-bold navbar-toggler font-weight-bold"
           type="button"
@@ -38,42 +32,31 @@ const Navbar = () => {
           id="navbarNav"
         >
           <ul className="navbar-nav">
-            <li
-              className={`nav-item ${activeNavItem === "home" ? "active" : ""}`}
-            >
-              {/* <Link to={"/"}>Home</Link> */}
-              <Link
-                className="custom-link font-weight-bold nav-link"
-                to={"/"}
-                onClick={() => handleNavItemClick("home")}
-              >
-                Home
-              </Link>
-            </li>
+           
             <li
               className={`nav-item ${
-                activeNavItem === "recommendation-system" ? "active" : ""
+                activeNavItem === "product-list" ? "active" : ""
               }`}
             >
               <Link
                 className="custom-link font-weight-bold nav-link"
-                to={"/recommendation-system"}
-                onClick={() => handleNavItemClick("recommendation-system")}
+                to={"/product-list"}
+                onClick={() => handleNavItemClick("product-list")}
               >
-                Recommendation System
+                Product
               </Link>
             </li>
             <li
               className={`nav-item ${
-                activeNavItem === "about" ? "active" : ""
+                activeNavItem === "order-list" ? "active" : ""
               }`}
             >
               <Link
                 className="custom-link font-weight-bold nav-link"
-                to={"/about"}
-                onClick={() => handleNavItemClick("about")}
+                to={"/order-list"}
+                onClick={() => handleNavItemClick("order-list")}
               >
-                About Us
+                Order
               </Link>
             </li>
           </ul>
