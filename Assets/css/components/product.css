@@ -1,6 +1,6 @@
 .product {
     width: 80%;
-    margin: 0 auto; /* Centers the div horizontally */
+    margin: 70px auto; /* Centers the div horizontally */
   }
   
 .product .header{
@@ -71,7 +71,7 @@
     border-radius: 5px;
 }
 
-.product .btn {
+.product .btn-primary {
     background-color: #83CBEB;
 }
 

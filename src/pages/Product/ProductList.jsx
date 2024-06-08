@@ -1,8 +1,78 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+
 export const ProductList = () => {
-  return (
+    const [products, setProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [lastpage, setLastPage] = useState(1);
+    const [firstpage, setFirstpage] = useState(1);
+    function formatDateString(isoString) {
+        const date = new Date(isoString);
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"
+        ];
+        const year = date.getFullYear();
+        const month = monthNames[date.getMonth()];
+        const day = date.getDate();
+        function getOrdinalSuffix(day) {
+            if (day > 3 && day < 21) return 'th';
+            switch (day % 10) {
+                case 1: return 'st';
+                case 2: return 'nd';
+                case 3: return 'rd';
+                default: return 'th';
+            }
+        }
+        const formattedDate = `${day}${getOrdinalSuffix(day)} ${month}, ${year}`;
+    
+        return formattedDate;
+    }
+    const fetchData = async () => {
+        try {
+            const url = "https://reactjr.coderslab.online/api/";
+            const response = await fetch(`${url}products?search=Ru&per_page=10&page=${currentPage}`);
+            
+            const data = await response.json();
+            
+            setProducts(data.data.data);
+            setCurrentPage(data.data.current_page);
+            setLastPage(data.data.last_page);
+          //  setFirstpage(data.data.current_page);
+
+        } catch (error) {
+            console.error('Error fetching the products:', error);
+        }
+    };
+
+    const deleteProduct = (id) => {
+        const url = "https://reactjr.coderslab.online/api/";
+        fetch(`${url}products/${id}`, {
+          method: 'DELETE',
+        })
+          .then(response => {
+            if (response.ok) {
+              setProducts(products.filter(product => product.id !== id));
+            } else {
+              console.error('Failed to delete product:', response);
+            }
+          })
+          .catch(error => console.error('Error deleting product:', error));
+      };
+
+useEffect( ()=>{
+    //const url = 'https://reactjr.coderslab.online/api/products?search=Ru&per_page=10&page=1'                                                                                           
+    fetchData();
+    if(currentPage>firstpage+3){
+        setFirstpage(currentPage)
+    }
+    else if(currentPage<firstpage){
+        setFirstpage(firstpage-4);
+    }
+},[currentPage])
+    console.log(products)
+    return (
     <div className='product'>
        <div className='header'>
        <h4 className=''>Product</h4>
@@ -25,173 +95,41 @@ export const ProductList = () => {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Brand</th>
+
                 <th>Type</th>
                 <th>Created At</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
+            {/* <tr>
                 <td>Tiger Nixon</td>
                 <td>System Architect</td>
                 <td>Edinburgh</td>
                 <td>61</td>
                 <td>2011-04-25</td>
                 <td>$320,800</td>
+            </tr> */}
+        {
+            products.length > 0 && products.map( (product, index)=>{
+
+                return  <tr key={index}>
+                <td>{product.id}</td>
+                <td>{product.name}</td>
+                <td>{product.brand}</td>
+                <td>{product.type}</td>
+                <td>{formatDateString(product.created_at)}</td>
+                <td>
+                    <Link className='btn btn-primary mr-2' to={`/edit-product/${product.id}`} state={product}>Edit</Link> 
+                    <Link className='btn btn-info mr-2' to={`/view-product/${product.id}`} state={product}>View</Link> 
+                    <Link className='btn btn-danger' onClick={()=>{
+                        deleteProduct(product.id)
+                    }}>Delete</Link> 
+                   
+                    </td>
             </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011-07-25</td>
-                <td>$170,750</td>
-            </tr>
-            <tr>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
-                <td>2009-01-12</td>
-                <td>$86,000</td>
-            </tr>
-            <tr>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2012-03-29</td>
-                <td>$433,060</td>
-            </tr>
-            <tr>
-                <td>Airi Satou</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>33</td>
-                <td>2008-11-28</td>
-                <td>$162,700</td>
-            </tr>
-            <tr>
-                <td>Brielle Williamson</td>
-                <td>Integration Specialist</td>
-                <td>New York</td>
-                <td>61</td>
-                <td>2012-12-02</td>
-                <td>$372,000</td>
-            </tr>
-            <tr>
-                <td>Herrod Chandler</td>
-                <td>Sales Assistant</td>
-                <td>San Francisco</td>
-                <td>59</td>
-                <td>2012-08-06</td>
-                <td>$137,500</td>
-            </tr>
-            <tr>
-                <td>Rhona Davidson</td>
-                <td>Integration Specialist</td>
-                <td>Tokyo</td>
-                <td>55</td>
-                <td>2010-10-14</td>
-                <td>$327,900</td>
-            </tr>
-            <tr>
-                <td>Colleen Hurst</td>
-                <td>Javascript Developer</td>
-                <td>San Francisco</td>
-                <td>39</td>
-                <td>2009-09-15</td>
-                <td>$205,500</td>
-            </tr>
-            <tr>
-                <td>Sonya Frost</td>
-                <td>Software Engineer</td>
-                <td>Edinburgh</td>
-                <td>23</td>
-                <td>2008-12-13</td>
-                <td>$103,600</td>
-            </tr>
-            <tr>
-                <td>Jena Gaines</td>
-                <td>Office Manager</td>
-                <td>London</td>
-                <td>30</td>
-                <td>2008-12-19</td>
-                <td>$90,560</td>
-            </tr>
-            <tr>
-                <td>Quinn Flynn</td>
-                <td>Support Lead</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2013-03-03</td>
-                <td>$342,000</td>
-            </tr>
-            <tr>
-                <td>Charde Marshall</td>
-                <td>Regional Director</td>
-                <td>San Francisco</td>
-                <td>36</td>
-                <td>2008-10-16</td>
-                <td>$470,600</td>
-            </tr>
-            <tr>
-                <td>Haley Kennedy</td>
-                <td>Senior Marketing Designer</td>
-                <td>London</td>
-                <td>43</td>
-                <td>2012-12-18</td>
-                <td>$313,500</td>
-            </tr>
-            <tr>
-                <td>Tatyana Fitzpatrick</td>
-                <td>Regional Director</td>
-                <td>London</td>
-                <td>19</td>
-                <td>2010-03-17</td>
-                <td>$385,750</td>
-            </tr>
-            <tr>
-                <td>Michael Silva</td>
-                <td>Marketing Designer</td>
-                <td>London</td>
-                <td>66</td>
-                <td>2012-11-27</td>
-                <td>$198,500</td>
-            </tr>
-            <tr>
-                <td>Paul Byrd</td>
-                <td>Chief Financial Officer (CFO)</td>
-                <td>New York</td>
-                <td>64</td>
-                <td>2010-06-09</td>
-                <td>$725,000</td>
-            </tr>
-            <tr>
-                <td>Gloria Little</td>
-                <td>Systems Administrator</td>
-                <td>New York</td>
-                <td>59</td>
-                <td>2009-04-10</td>
-                <td>$237,500</td>
-            </tr>
-            <tr>
-                <td>Bradley Greer</td>
-                <td>Software Engineer</td>
-                <td>London</td>
-                <td>41</td>
-                <td>2012-10-13</td>
-                <td>$132,000</td>
-            </tr>
-            <tr>
-                <td>Dai Rios</td>
-                <td>Personnel Lead</td>
-                <td>Edinburgh</td>
-                <td>35</td>
-                <td>2012-09-26</td>
-                <td>$217,500</td>
-            </tr>
-            
+            })
+        }
         </tbody>
         <tfoot>
             {/* <tr>
@@ -211,17 +149,45 @@ export const ProductList = () => {
        <nav aria-label="Page navigation example">
   <ul className="pagination">
     <li className="page-item">
-      <a className="page-link" href="#" aria-label="Previous">
+      <a className="page-link" href="#" aria-label="Previous" onClick={()=>{
+      if(currentPage!=1)
+      setCurrentPage(currentPage-1);
+    }}>
         <span aria-hidden="true">&laquo;</span>
         <span className="sr-only">Previous</span>
       </a>
     </li>
-    <li className="page-item "><a className="page-link" href="#">1</a></li>
-    <li className="page-item"><a className="page-link" href="#">2</a></li>
-    <li className="page-item"><a className="page-link" href="#">3</a></li>
-    <li className="page-item"><a className="page-link" href="#">4</a></li>
+   
+    <li 
+   // className="page-item active"
+    className={`page-item ${firstpage==currentPage ? 'active' : ''}`}
+    ><a className="page-link" 
+    onClick={()=>{
+      setCurrentPage(firstpage)
+    }} 
+    href="#">{firstpage}</a></li>
+
+    <li  className={`page-item ${firstpage+1==currentPage ? 'active' : ''}`  } ><a className="page-link" href="#"
+     onClick={()=>{
+        setCurrentPage(firstpage+1)
+      }}
+    >{firstpage+1}</a></li>
+
+    <li  className={`page-item ${firstpage+2==currentPage ? 'active' : ''}`}><a className="page-link" href="#"
+     onClick={()=>{
+        setCurrentPage(firstpage+2)
+    }}
+    >{firstpage+2}</a></li>
+    <li  className={`page-item ${firstpage+3==currentPage ? 'active' : ''}`}><a className="page-link" href="#"
+     onClick={()=>{
+     setCurrentPage(firstpage+3)
+    }}
+    >{firstpage+3}</a></li>
     <li className="page-item">
-      <a className="page-link" href="#" aria-label="Next">
+      <a className="page-link" href="#" aria-label="Next" onClick={()=>{
+      if(currentPage!=lastpage)
+      setCurrentPage(currentPage+1);
+    }}>
         <span aria-hidden="true">&raquo;</span>
         <span className="sr-only">Next</span>
       </a>

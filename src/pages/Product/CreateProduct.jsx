@@ -1,65 +1,189 @@
-import React from 'react'
+import React, { useState } from 'react';
 
 export const CreateProduct = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    brand: '',
+    type: '',
+    origin: '',
+    variants: [{ color: '', specification: '', size: '' }]
+  });
+  const res = {
+    name: '',
+    brand: '',
+    type: '',
+    origin: '',
+    variants: [{ color: '', specification: '', size: '' }]
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleVariantChange = (index, e) => {
+    const { name, value } = e.target;
+    const newVariants = formData.variants.map((variant, i) => (
+      i === index ? { ...variant, [name]: value } : variant
+    ));
+    setFormData({
+      ...formData,
+      variants: newVariants
+    });
+  };
+
+  const addVariant = () => {
+    setFormData({
+      ...formData,
+      variants: [...formData.variants, { color: '', specification: '', size: '' }]
+    });
+  };
+
+  const removeVariant = (index) => {
+    const newVariants = formData.variants.filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      variants: newVariants
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const url = "https://reactjr.coderslab.online/api/products";
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+ 
+
+  console.log(formData)
   return (
     <div className='product'>
-       <div className='header'>
-       <h4 className=''>Product</h4>
-
-       </div>
-    <div className='details'>
-      <h5>Create Product</h5>
-    <div className='form'>
-       
-
-       <div class='row'>
-  <div class='col-6 mb-3'>
-    <input class='form-control' type='text' placeholder='Name'/>
-  </div>
-  <div class='col-6 mb-3'>
-    <input class='form-control' type='text' placeholder='Brand'/>
-  </div>
-  <div class='col-6 mb-3'>
-    <input class='form-control' type='text' placeholder='Type'/>
-  </div>
-  <div class='col-6 mb-3'>
-    <input class='form-control' type='text' placeholder='Origin'/>
-  </div>
-</div>
-
-       </div>
-    </div>
-    <div className='details'>
-      <h5>Variants</h5>
-    <div className='form'>
-       
-    <div>
-      {Array.from({ length: 4 }, (_, index) => (
-        <div className="row" key={index}>
-          <div className="col-2 mb-3">
-            <input className="form-control" type="text" placeholder="Color" />
-          </div>
-          <div className="col-5 mb-3">
-            <input className="form-control" type="text" placeholder="Specification" />
-          </div>
-          <div className="col-2 mb-3">
-            <input className="form-control" type="text" placeholder="Size" />
-          </div>
-          <div className="col-3 mb-3">
-            <button className="btn btn-primary mr-2">+</button>
-            <button className="btn btn-primary ml-2">-</button>
+      <div className='header'>
+        <h4 className=''>Product</h4>
+      </div>
+      <div className='details'>
+        <h5>Create Product</h5>
+        <div className='form'>
+          <div className='row'>
+            <div className='col-6 mb-3'>
+              <input
+                className='form-control'
+                type='text'
+                name='name'
+                placeholder='Name'
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='col-6 mb-3'>
+              <input
+                className='form-control'
+                type='text'
+                name='brand'
+                placeholder='Brand'
+                value={formData.brand}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='col-6 mb-3'>
+              <input
+                className='form-control'
+                type='text'
+                name='type'
+                placeholder='Type'
+                value={formData.type}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='col-6 mb-3'>
+              <input
+                className='form-control'
+                type='text'
+                name='origin'
+                placeholder='Origin'
+                value={formData.origin}
+                onChange={handleChange}
+              />
+            </div>
           </div>
         </div>
-      ))}
+      </div>
+      <div className='details'>
+        <h5>Variants</h5>
+        <div className='form row'>
+          {formData.variants.map((variant, index) => (
+            <div className="row col-12" key={index}>
+              <div className="col-2 mb-3">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="color"
+                  placeholder="Color"
+                  value={variant.color}
+                  onChange={(e) => handleVariantChange(index, e)}
+                />
+              </div>
+              <div className="col-5 mb-3">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="specification"
+                  placeholder="Specification"
+                  value={variant.specification}
+                  onChange={(e) => handleVariantChange(index, e)}
+                />
+              </div>
+              <div className="col-2 mb-3">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="size"
+                  placeholder="Size"
+                  value={variant.size}
+                  onChange={(e) => handleVariantChange(index, e)}
+                />
+              </div>
+              <div className="col-3 mb-3">
+                <button
+                  type="button"
+                  className="btn btn-primary mr-2"
+                  onClick={addVariant}
+                >
+                  +
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary ml-2"
+                  onClick={() => removeVariant(index)}
+                >
+                  -
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className='submit-group'>
+        <button className='btn btn-primary mr-2' onClick={()=>{
+          setFormData(res)
+        }}>Cancel</button>
+        <button className='btn btn-primary mr-2' onClick={handleSubmit}>Submit</button>
+      </div>
     </div>
-
-       </div>
-    </div>
-
-    <div className='submit-group'>
-    <button className='btn btn-primary mr-2'>Cancel</button>
-    <button className='btn btn-primary mr-2'>Submit</button>
-    </div>
-    </div>
-  )
-}
+  );
+};
