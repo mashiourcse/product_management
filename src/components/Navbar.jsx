@@ -31,7 +31,7 @@ const Navbar = () => {
           }`}
           id="navbarNav"
         >
-          <ul className="navbar-nav">
+          <ul className="navbar-nav justify-content-center">
            
             <li
               className={`nav-item ${

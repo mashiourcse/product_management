@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-
+import axios from 'axios';
 export const CreateProduct = () => {
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     brand: '',
@@ -53,19 +55,48 @@ export const CreateProduct = () => {
     e.preventDefault();
 
     const url = "https://reactjr.coderslab.online/api/products";
+  
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+      const res = await axios.post(url, {
+        "name": "Test Product from M",
+        "brand": "Brand X",
+        "type": "Mug",
+        "origin": "Country Z",
+        "variants": [
+          {
+            "color": "Red",
+            "specification": "Specification 1",
+            "size": "large"
+          },
+          {
+            "color": "Blue",
+            "specification": "Specification 2",
+            "size": "medium"
+          },
+          {
+            "color": "Green",
+            "specification": "Specification 3",
+            "size": "small"
+          }
+        ]
       });
-      const result = await response.json();
-      console.log(result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+      setResponse(res.data);
+  } catch (err) {
+      setError(err);
+  }
+    // try {
+    //   const response = await fetch(url, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(formData)
+    //   });
+    //   const result = await response.json();
+    //   console.log(result);
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
   };
 
  
