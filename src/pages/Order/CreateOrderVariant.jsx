@@ -5,7 +5,7 @@ export const CreateOrderVariant = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [productIndex, setProductIndex] = useState(0);
   const location = useLocation();
-
+  
   useEffect(() => {
     const initialSelectedProducts = location.state || [];
     setSelectedProducts(initialSelectedProducts.map(product => ({
@@ -15,16 +15,37 @@ export const CreateOrderVariant = () => {
   }, [location.state]);
 
   const handleVariantSelection = (productIndex, id) => {
-    console.log({productIndex,id})
-    console.log(selectedProducts[productIndex].variants.find(variant => variant.id === id))
-    let selected = selectedProducts[productIndex].variants.find(variant => variant.id === id);
     setSelectedProducts(prevSelected => {
-      const updatedProducts = [...prevSelected];
-      const selectedProduct = updatedProducts[productIndex];
-      
-      if (variantIndex !== -1) {
-        selectedProduct.variants[variantIndex].checked = !selectedProduct.variants[variantIndex].checked;
-      }
+      const updatedProducts = prevSelected.map((product, pIndex) => {
+        if (pIndex === productIndex) {
+          const updatedVariants = product.variants.map(variant => {
+            if (variant.id === id) {
+              return { ...variant, checked: !variant.checked };
+            }
+            return variant;
+          });
+          return { ...product, variants: updatedVariants };
+        }
+        return product;
+      });
+      return updatedProducts;
+    });
+  };
+
+  const handleQuantityChange = (productIndex, id, quantity) => {
+    setSelectedProducts(prevSelected => {
+      const updatedProducts = prevSelected.map((product, pIndex) => {
+        if (pIndex === productIndex) {
+          const updatedVariants = product.variants.map(variant => {
+            if (variant.id === id) {
+              return { ...variant, quantity: Number(quantity) };
+            }
+            return variant;
+          });
+          return { ...product, variants: updatedVariants };
+        }
+        return product;
+      });
       return updatedProducts;
     });
   };
@@ -38,7 +59,7 @@ export const CreateOrderVariant = () => {
         <div className='top-section'>
           <select
             className='btn btn-primary'
-            onChange={(e) => setProductIndex(e.target.value)}
+            onChange={(e) => setProductIndex(Number(e.target.value))}
             name="product"
             value={productIndex}
           >
@@ -67,11 +88,19 @@ export const CreateOrderVariant = () => {
                   <td>{variant.color}</td>
                   <td>{variant.specification}</td>
                   <td>{variant.size}</td>
-                  <td><input type='number' defaultValue='0' /></td>
+                  <td>
+                    <input
+                      type='number'
+                      className='form-control'
+                      style={{ width: "60px" }}
+                      value={variant.quantity}
+                      onChange={(e) => handleQuantityChange(productIndex, variant.id, e.target.value)}
+                    />
+                  </td>
                   <td>
                     <input
                       type="checkbox"
-                      defaultChecked={variant.checked}
+                      checked={variant.checked}
                       onChange={() => handleVariantSelection(productIndex, variant.id)}
                     />
                   </td>

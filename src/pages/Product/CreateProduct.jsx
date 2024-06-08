@@ -57,46 +57,12 @@ export const CreateProduct = () => {
     const url = "https://reactjr.coderslab.online/api/products";
   
     try {
-      const res = await axios.post(url, {
-        "name": "Test Product from M",
-        "brand": "Brand X",
-        "type": "Mug",
-        "origin": "Country Z",
-        "variants": [
-          {
-            "color": "Red",
-            "specification": "Specification 1",
-            "size": "large"
-          },
-          {
-            "color": "Blue",
-            "specification": "Specification 2",
-            "size": "medium"
-          },
-          {
-            "color": "Green",
-            "specification": "Specification 3",
-            "size": "small"
-          }
-        ]
-      });
+      const res = await axios.post(url, formData);
       setResponse(res.data);
   } catch (err) {
       setError(err);
   }
-    // try {
-    //   const response = await fetch(url, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(formData)
-    //   });
-    //   const result = await response.json();
-    //   console.log(result);
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // }
+  
   };
 
  
@@ -132,14 +98,13 @@ export const CreateProduct = () => {
               />
             </div>
             <div className='col-6 mb-3'>
-              <input
-                className='form-control'
-                type='text'
-                name='type'
-                placeholder='Type'
-                value={formData.type}
-                onChange={handleChange}
-              />
+             
+              <select className="form-control" name="type" id="" value={formData.type} onChange={handleChange}>
+                <option value="Mug">Mug</option>
+                <option value="Cup">Cup</option>
+                <option value="Glass">Glass</option>
+                
+              </select>
             </div>
             <div className='col-6 mb-3'>
               <input
@@ -160,14 +125,20 @@ export const CreateProduct = () => {
           {formData.variants.map((variant, index) => (
             <div className="row col-12" key={index}>
               <div className="col-2 mb-3">
-                <input
+                {/* <input
                   className="form-control"
                   type="text"
                   name="color"
                   placeholder="Color"
                   value={variant.color}
                   onChange={(e) => handleVariantChange(index, e)}
-                />
+                /> */}
+                <select className="form-control" name="color" id="" defaultValue={variant.color} onChange={(e) => handleVariantChange(index, e)}>
+                <option value="Yellow">Yellow</option>
+                <option value="Red">Red</option>
+                <option value="Green">Green</option>
+                
+              </select>
               </div>
               <div className="col-5 mb-3">
                 <input
@@ -180,14 +151,19 @@ export const CreateProduct = () => {
                 />
               </div>
               <div className="col-2 mb-3">
-                <input
+                {/* <input
                   className="form-control"
                   type="text"
                   name="size"
                   placeholder="Size"
                   value={variant.size}
                   onChange={(e) => handleVariantChange(index, e)}
-                />
+                /> */}
+                <select className="form-control" name="size" id="" onChange={(e) => handleVariantChange(index, e)}>
+                  <option value="small">small</option>
+                  <option value="large">large</option>
+                  <option value="medium">medium</option>
+                </select>
               </div>
               <div className="col-3 mb-3">
                 <button

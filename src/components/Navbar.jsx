@@ -26,12 +26,12 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div
-          className={`collapse navbar-collapse ${
+          className={`collapse navbar-collapse justify-content-center ${
             navbarCollapsed ? "" : "show"
           }`}
           id="navbarNav"
         >
-          <ul className="navbar-nav justify-content-center">
+          <ul className="navbar-nav " >
            
             <li
               className={`nav-item ${

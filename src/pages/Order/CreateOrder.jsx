@@ -40,23 +40,7 @@ export const CreateOrder = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const url = "https://reactjr.coderslab.online/api/products";
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(selectedProducts)
-      });
-      const result = await response.json();
-      console.log(result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+  
 console.log(selectedProducts)
   return (
     <div className='product'>

@@ -1,17 +1,43 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export const CreateOrderFinal = () => {
-
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
   const location = useLocation();
   console.log(location.state);
+  useEffect(() => {
+    const initialSelectedProducts = location.state || [];
+    setSelectedProducts(
+      initialSelectedProducts.map(product => ({
+      ...product,
+      // variants: product.variants.map(variant => ({ ...variant, checked: false, quantity: 0 }))
+      
+      variants: product.variants.filter( variant => variant.checked)
+    })));
+    var details = [];
+    var total_quantity = 0;
+    selectedProducts.map((product, index)=>{
+        product.variants.map((variant,i)=>{
+          console.log(variant);
+          let variant_id = variant.id;
+          let quantity = variant.quantity;
+          details.push({variant_id, quantity});
+          total_quantity += quantity;
+        })
+    })
 
+    setFormData( { ...formData, details: details, total_quantity: total_quantity});
+
+  }, [location.state]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     address: '',
    total_quantity: '',
-
+    details: []
   });
   const res = {
     name: '',
@@ -26,7 +52,21 @@ export const CreateOrderFinal = () => {
       [name]: value
     });
   };
-
+const handleSubmit = async (e) => {
+    e.preventDefault();
+   
+    const url = "https://reactjr.coderslab.online/api/orders";
+    
+    try {
+      const res = await axios.post(url, formData);
+      setResponse(res.data);
+      console.log(response);
+  } catch (err) {
+      setError(err);
+      console.log(error);
+  }
+  };
+  console.log(selectedProducts)
   console.log(formData)
   return (
     <div className='product'>
@@ -86,7 +126,7 @@ export const CreateOrderFinal = () => {
         <button className='btn btn-primary mr-2' onClick={()=>{
           setFormData(res)
         }}>Back</button>
-        <button className='btn btn-primary mr-2' >Submit</button>
+        <button className='btn btn-primary mr-2' onClick={handleSubmit}>Submit</button>
       </div>
     </div>
   );
