@@ -10,6 +10,7 @@ import { ViewProduct } from "../src/pages/Product/ViewProduct";
 import { OrderList } from "../src/pages/Order/OrderList";
 import { CreateOrder } from "../src/pages/Order/CreateOrder";
 import { CreateOrderVariant } from "../src/pages/Order/CreateOrderVariant";
+import { CreateOrderFinal } from "../src/pages/Order/CreateOrderFinal";
 
 export const routes = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const routes = createBrowserRouter([
       {
         path: "/create-order-variant",
         element: < CreateOrderVariant/>
+      },
+      {
+        path: "/create-order-final",
+        element: < CreateOrderFinal/>
       }
     ],
   },

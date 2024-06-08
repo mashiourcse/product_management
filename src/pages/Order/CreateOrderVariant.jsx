@@ -10,17 +10,18 @@ export const CreateOrderVariant = () => {
     const initialSelectedProducts = location.state || [];
     setSelectedProducts(initialSelectedProducts.map(product => ({
       ...product,
-      variants: product.variants.map(variant => ({ ...variant, checked: false }))
+      variants: product.variants.map(variant => ({ ...variant, checked: false, quantity: 0 }))
     })));
   }, [location.state]);
 
   const handleVariantSelection = (productIndex, id) => {
     console.log({productIndex,id})
     console.log(selectedProducts[productIndex].variants.find(variant => variant.id === id))
+    let selected = selectedProducts[productIndex].variants.find(variant => variant.id === id);
     setSelectedProducts(prevSelected => {
       const updatedProducts = [...prevSelected];
       const selectedProduct = updatedProducts[productIndex];
-      const variantIndex = selectedProduct.variants.findIndex(variant => variant.id === id);
+      
       if (variantIndex !== -1) {
         selectedProduct.variants[variantIndex].checked = !selectedProduct.variants[variantIndex].checked;
       }
@@ -81,7 +82,7 @@ export const CreateOrderVariant = () => {
           </table>
           <div className='submit-group'>
             <Link to="/" className='btn btn-primary mr-2' onClick={() => setSelectedProducts([])}>Cancel</Link>
-            <Link to='/create-order-variant' state={selectedProducts} className='btn btn-primary mr-2'>Next</Link>
+            <Link to='/create-order-final' state={selectedProducts} className='btn btn-primary mr-2'>Next</Link>
           </div>
         </div>
       </div>
