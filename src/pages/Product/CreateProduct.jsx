@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {product_url} from '../../../API/api';
+
 export const CreateProduct = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     brand: '',
-    type: '',
+    type: 'Mug',
     origin: '',
-    variants: [{ color: '', specification: '', size: '' }]
+    variants: [{ color: 'Yellow', specification: '', size: 'small' }]
   });
   const res = {
     name: '',
@@ -54,7 +56,7 @@ export const CreateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = "https://reactjr.coderslab.online/api/products";
+    const url = product_url;
   
     try {
       const res = await axios.post(url, formData);

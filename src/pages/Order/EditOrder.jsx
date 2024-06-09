@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import {order_url} from '../../../API/api';
 export const EditOrder = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export const EditOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`https://reactjr.coderslab.online/api/orders/${order.id}`, order, {
+      const response = await axios.put(`${order_url}/${order.id}`, order, {
         headers: {
           'Content-Type': 'application/json'
         }

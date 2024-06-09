@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-
+import {product_url} from '../../../API/api';
 export const EditProduct = () => {
 
   
@@ -64,7 +64,7 @@ export const EditProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = "https://reactjr.coderslab.online/api/products";
+    const url = product_url;
   
     try {
       const res = await axios.put(`${url}/${params.id}`, formData);

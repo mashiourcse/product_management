@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import {list_url} from '../../../API/api';
 
 export const OrderList = () => {
     const [orders, setorders] = useState([]);
@@ -31,7 +31,7 @@ export const OrderList = () => {
     }
     const fetchData = async () => {
         try {
-            const url = "https://reactjr.coderslab.online/api/";
+            const url = list_url;
             const response = await fetch(`${url}orders?&page=${currentPage}`);
             
             const data = await response.json();
@@ -47,7 +47,7 @@ export const OrderList = () => {
     };
 
     const deleteOrder = (id) => {
-        const url = "https://reactjr.coderslab.online/api/";
+        const url = list_url;
         fetch(`${url}orders/${id}`, {
           method: 'DELETE',
         })

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-
+import {order_url} from '../../../API/api';
 export const CreateOrderFinal = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [response, setResponse] = useState(null);
@@ -55,7 +55,7 @@ export const CreateOrderFinal = () => {
 const handleSubmit = async (e) => {
     e.preventDefault();
    
-    const url = "https://reactjr.coderslab.online/api/orders";
+    const url = order_url;
     
     try {
       const res = await axios.post(url, formData);
@@ -74,7 +74,7 @@ const handleSubmit = async (e) => {
         <h4 className=''>Information</h4>
       </div>
       <div className='details'>
-        <h5>Create Product</h5>
+        
         <div className='form'>
           <div className='row'>
             <div className='col-6 mb-3'>

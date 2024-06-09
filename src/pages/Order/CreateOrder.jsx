@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import {list_url} from '../../../API/api';
 export const CreateOrder = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -10,7 +10,7 @@ export const CreateOrder = () => {
 
   const fetchData = async () => {
     try {
-      const url = "https://reactjr.coderslab.online/api/";
+      const url = list_url;
       const response = await fetch(`${url}products?search=Ru&per_page=5&page=${currentPage}`);
       const data = await response.json();
       setProducts(data.data.data);
