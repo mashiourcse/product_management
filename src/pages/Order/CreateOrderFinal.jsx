@@ -7,6 +7,7 @@ export const CreateOrderFinal = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
+  const [emailError, setEmailError] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -55,10 +56,28 @@ export const CreateOrderFinal = () => {
       ...formData,
       [name]: value
     });
+    
+    if (name === 'email') {
+      validateEmail(value);
+    }
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError('Invalid email address');
+    } else {
+      setEmailError('');
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (emailError) {
+      return;
+    }
+
     const url = order_url;
 
     try {
@@ -96,7 +115,9 @@ export const CreateOrderFinal = () => {
                 placeholder='Email'
                 value={formData.email}
                 onChange={handleChange}
+                required
               />
+              {emailError && <small className="text-danger">{emailError}</small>}
             </div>
             <div className='col-6 mb-3'>
               <input
@@ -115,7 +136,6 @@ export const CreateOrderFinal = () => {
                 name='total_quantity'
                 placeholder='Total Quantity'
                 value={formData.total_quantity}
-                onChange={handleChange}
                 readOnly
               />
             </div>
@@ -125,7 +145,7 @@ export const CreateOrderFinal = () => {
 
       <div className='submit-group'>
         <Link to="/create-order" className='btn btn-primary mr-2'>Back</Link>
-        <button className='btn btn-primary mr-2' onClick={handleSubmit}>Submit</button>
+        <button className='btn btn-primary mr-2' onClick={handleSubmit} disabled={!!emailError}>Submit</button>
       </div>
     </div>
   );
