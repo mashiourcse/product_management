@@ -122,8 +122,8 @@ useEffect( ()=>{
                 <td>{order.total_quantity}</td>
                 <td>{formatDateString(order.created_at)}</td>
                 <td>
-                    <Link className='btn btn-primary mr-2' to={`/edit-product/${order.id}`} state={order}>Edit</Link> 
-                    <Link className='btn btn-info mr-2' to={`/view-product/${order.id}`} state={order}>View</Link> 
+                    <Link className='btn btn-primary mr-2' to={`/edit-order/${order.id}`} state={order}>Edit</Link> 
+                    <Link className='btn btn-info mr-2' to={`/view-order/${order.id}`} state={order}>View</Link> 
                     <Link className='btn btn-danger' onClick={()=>{
                         deleteOrder(order.id)
                     }}>Delete</Link> 

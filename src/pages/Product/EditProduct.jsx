@@ -3,6 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 export const EditProduct = () => {
 
+  
   const location = useLocation();
   const params = useParams();
   const [response, setResponse] = useState(null);

@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../src/pages/Home";
-import RecommendationSystem from "../src/pages/RecommendationSystem";
+
 import Layouts from "../src/components/layouts/Layouts";
 import { ProductList } from "../src/pages/Product/ProductList";
 import { CreateProduct } from "../src/pages/Product/CreateProduct";
@@ -10,6 +10,8 @@ import { OrderList } from "../src/pages/Order/OrderList";
 import { CreateOrder } from "../src/pages/Order/CreateOrder";
 import { CreateOrderVariant } from "../src/pages/Order/CreateOrderVariant";
 import { CreateOrderFinal } from "../src/pages/Order/CreateOrderFinal";
+import { EditOrder } from "../src/pages/Order/EditOrder";
+import { ViewOrder } from "../src/pages/Order/ViewOrder";
 
 export const routes = createBrowserRouter([
   {
@@ -19,10 +21,6 @@ export const routes = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-      },
-      {
-        path: "/recommendation-system",
-        element: <RecommendationSystem />,
       },
       
       {
@@ -57,19 +55,16 @@ export const routes = createBrowserRouter([
       {
         path: "/create-order-final",
         element: < CreateOrderFinal/>
+      },
+      {
+        path: "/edit-order/:id",
+        element: <EditOrder />
+      },
+      {
+        path: "/view-order/:id",
+        element: <ViewOrder />
       }
     ],
   },
-  // {
-  //     path: "/",
-  //     element: <Home/>,
-  // },
-  // {
-  //     path: "/recommendation-system",
-  //     element: <RecommendationSystem/>,
-  // },
-  // {
-  //     path: "/about",
-  //     element: <About/>,
-  // },
+ 
 ]);
