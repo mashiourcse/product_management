@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {product_url} from '../../../API/api';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateProduct = () => {
+  const navigate = useNavigate();
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
@@ -61,6 +63,8 @@ export const CreateProduct = () => {
     try {
       const res = await axios.post(url, formData);
       setResponse(res.data);
+
+      navigate('/product-success');
   } catch (err) {
       setError(err);
   }
@@ -193,6 +197,7 @@ export const CreateProduct = () => {
         }}>Cancel</button>
         <button className='btn btn-primary mr-2' onClick={handleSubmit}>Submit</button>
       </div>
+     
     </div>
   );
 };

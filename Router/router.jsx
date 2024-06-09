@@ -12,6 +12,8 @@ import { CreateOrderVariant } from "../src/pages/Order/CreateOrderVariant";
 import { CreateOrderFinal } from "../src/pages/Order/CreateOrderFinal";
 import { EditOrder } from "../src/pages/Order/EditOrder";
 import { ViewOrder } from "../src/pages/Order/ViewOrder";
+import { OrderSuccess } from "../src/pages/Order/OrderSuccess";
+import { ProductSuccess } from "../src/pages/Product/ProductSuccess";
 
 export const routes = createBrowserRouter([
   {
@@ -41,6 +43,10 @@ export const routes = createBrowserRouter([
       },
 
       {
+        path: "/product-success",
+        element: <ProductSuccess/>
+      },
+      {
         path: "/order-list",
         element: <OrderList/>
       },
@@ -63,6 +69,10 @@ export const routes = createBrowserRouter([
       {
         path: "/view-order/:id",
         element: <ViewOrder />
+      },
+      {
+        path: "/order-success",
+        element: <OrderSuccess/>
       }
     ],
   },

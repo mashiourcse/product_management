@@ -115,7 +115,7 @@ export const CreateOrderVariant = () => {
           </div>
         </div>
       </div>
-      {/* Pagination section if needed */}
+   
     </div>
   );
 };
